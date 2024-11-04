@@ -1,3 +1,5 @@
+using Application.Extensions;
+using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using Persistence.Extensions;
@@ -11,7 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigurePersistence(builder.Configuration);
-
+builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.ConfigureApplication();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,5 +29,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseStaticFiles();
 
 app.Run();

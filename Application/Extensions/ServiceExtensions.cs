@@ -1,7 +1,9 @@
 ﻿using Application.Contract.IFeatures;
 using Application.Contract.IFeatures.ICategory;
+using Application.Contract.IFeatures.IItem;
 using Application.Features.Category_Related_Imp;
 using Application.Features.Common;
+using Application.Features.Item_Related_Imp;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,9 @@ namespace Application.Extensions
 
 			//Category
 			services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
+
+			//Item
+			services.AddScoped(typeof(IItemService), typeof(ItemService));
 		}
 	}
 }

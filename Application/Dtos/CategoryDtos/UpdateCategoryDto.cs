@@ -10,6 +10,6 @@ namespace Application.Dtos.CategoryDtos
 	public class UpdateCategoryDto
 	{
 		public string Name { get; set; }
-		public IFormFile ImageUrl { get; set; }
+		public IFormFile Image { get; set; }
 	}
 }
