@@ -1,5 +1,6 @@
 ﻿using Domin.Entities.Category_realted;
 using Domin.Entities.Item_realted;
+using Domin.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace Persistence.Context
 		}
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Item> Items { get; set; }
+		public DbSet<UserAccount> UserAccounts { get; set; }
+		public DbSet<UserRole> UserRoles { get; set; }
+		public DbSet<Role> Roles { get; set; }
+		public DbSet<UserSession> UserSessions { get; set; }
 
 	}
 }
