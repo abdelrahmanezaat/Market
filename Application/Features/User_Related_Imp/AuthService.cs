@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ namespace Application.Features.User_Related_Imp
 			
 			
 
-			var user = await _repository.FirstOrDefaultAsync(x=>x.Email==loginDto.Email);
+			var user = await _repository.FirstOrDefaultAsync(x=>x.Email==loginDto.Email,source=>source.Include(x=>x.UserSessions));
 
 			if (user == null || !_passwordHashService.Verify(user.PasswordHash, loginDto.Password))
 				throw new UnauthenticatedException();
@@ -57,12 +58,24 @@ namespace Application.Features.User_Related_Imp
 			user.UserRoles.Add(new UserRole { UserAccount = user, RoleId = RoleConstValues.User });
 			var refreshToken = _jwtService.GenerateRefreshToken();
 			user.UserSessions.Add(new UserSession { RefreshToken = refreshToken, UserAccount = user, RefreshTokenExpirationDate = DateTimeOffset.Now.AddDays(7) });
+			await _repository.AddAsync(user); 
 			await _unitOfWork.SaveChangesAsync();
-			await _repository.AddAsync(user);
+			
 			return await _jwtService.CreateAuthDto(user);
 			
 			
 
+		}
+		public async Task<AuthDto> RefreshToken(RefreshTokenDto refreshTokenDto)
+		{
+			var user = await _jwtService.GetUserByRefreshTokenAsync(refreshTokenDto.RefreshToken,
+				include: source => source
+				.Include(x => x.UserSessions)
+				.Include(x => x.UserRoles)
+				.ThenInclude(x => x.Role)
+			) ?? throw new UnauthenticatedException();
+
+			return await _jwtService.CreateAuthDto(user);
 		}
 	}
 }

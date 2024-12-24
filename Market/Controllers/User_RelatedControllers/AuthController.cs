@@ -40,6 +40,15 @@ namespace Market.Controllers.User_RelatedControllers
 
 			return Ok(result);
 		}
+		[HttpPut]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenDto refreshTokenDto)
+		{
+			var result = await _authService.RefreshToken(refreshTokenDto);
 
+			return Ok(result);
+		}
 	}
 }

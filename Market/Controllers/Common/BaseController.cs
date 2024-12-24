@@ -1,6 +1,8 @@
 ﻿using Application.Contract.IFeatures;
+using Application.Contract.IFeatures.IOrder;
 using Application.Exceptions;
 using Domin.Entities.Commin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.Controllers.Common
@@ -14,10 +16,16 @@ namespace Market.Controllers.Common
 		where TUpdateDto : class
 	{
 		protected readonly IBaseService<TEntity, TGetDto, TCreateDto, TUpdateDto> _service;
+		private IOrderService orderService;
 
 		protected BaseController(IBaseService<TEntity, TGetDto, TCreateDto, TUpdateDto> service)
 		{
 			_service = service;
+		}
+
+		protected BaseController(IOrderService orderService)
+		{
+			this.orderService = orderService;
 		}
 
 		[HttpGet]
@@ -36,7 +44,6 @@ namespace Market.Controllers.Common
 			var entity = await _service.GetByIdAsync(id);
 			return Ok(entity);
 		}
-
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

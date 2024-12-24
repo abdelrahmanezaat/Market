@@ -111,8 +111,14 @@ namespace Infrastructure.Service
             }
 
             var authDto = _mapper.Map<AuthDto>(user);
+			
 
-            authDto.AccessToken = token.Item1;
+			var roles = await _unitOfWork.GetRepository<Role>().FindAsync(x =>
+				x.UserRoles.Any(x => x.UserId == user.Id));
+
+			authDto.Roles = roles.Select(x => x.Name).ToList();
+
+			authDto.AccessToken = token.Item1;
             authDto.AccessTokenExpirationDate = token.Item2;
             return authDto;
         }

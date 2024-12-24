@@ -32,6 +32,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseStaticFiles();
-app.UseExceptionHandler();
 
 app.Run();

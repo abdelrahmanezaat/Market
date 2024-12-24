@@ -1,4 +1,5 @@
 ﻿using Domin.Entities.Commin;
+using Domin.Entities.Order_realted;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace Domin.Entities.UserEntities
 		public bool IsEmailConfirmed { get; set; }
 		public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 		public virtual ICollection<UserSession> UserSessions { get;set; } = new List<UserSession>();
+		public virtual ICollection<Order> Orders { get; set; }
 	}
 }

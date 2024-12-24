@@ -11,6 +11,7 @@ namespace Application.Contract.IUser
 	{
 		Task<AuthDto> Register(RegisterDto registerDto);
 		Task<AuthDto> Login(LoginDto loginDto);
-		
+		Task<AuthDto> RefreshToken(RefreshTokenDto refreshTokenDto);
+
 	}
 }

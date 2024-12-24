@@ -1,5 +1,8 @@
-﻿using Application.Dtos.UserDtos.AuthDtos;
+﻿using Application.Dtos.CategoryDtos;
+using Application.Dtos.UserDtos.AuthDtos;
+using Application.Profiles.Helpers;
 using AutoMapper;
+using Domin.Entities.Category_realted;
 using Domin.Entities.UserEntities;
 using Domin.Utils;
 using System;
@@ -14,16 +17,17 @@ namespace Application.Profiles.User_RelatedProfiles
 	{
 		public AuthProfile()
 		{
-			CreateMap<RegisterDto, UserAccount>();
+			CreateMap<RegisterDto, UserAccount>().
+				AfterMap<SetImageAction<RegisterDto, UserAccount>>();
 
 			CreateMap<UserAccount, AuthDto>()
 				.ForMember(dest => dest.ProfilePictureUrl, opt => opt.MapFrom(src => Constants.BASE_URL + src.ProfilePictureUrl))
-				
+
 				.ForMember(dest => dest.RefreshToken, opt =>
 					opt.MapFrom(src => src.UserSessions.FirstOrDefault(x => !x.IsDeleted).RefreshToken))
 				.ForMember(dest => dest.RefreshTokenExpirationDate, opt =>
-					opt.MapFrom(src => src.UserSessions.FirstOrDefault(x => !x.IsDeleted).RefreshTokenExpirationDate))
-				.ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.UserRoles.Select(x => x.Role.Name)));
+					opt.MapFrom(src => src.UserSessions.FirstOrDefault(x => !x.IsDeleted).RefreshTokenExpirationDate));
+				
 		}
 	}
 }

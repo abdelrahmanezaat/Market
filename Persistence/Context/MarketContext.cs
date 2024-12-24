@@ -1,5 +1,6 @@
 ﻿using Domin.Entities.Category_realted;
 using Domin.Entities.Item_realted;
+using Domin.Entities.Order_realted;
 using Domin.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,6 +22,7 @@ namespace Persistence.Context
 		public DbSet<UserRole> UserRoles { get; set; }
 		public DbSet<Role> Roles { get; set; }
 		public DbSet<UserSession> UserSessions { get; set; }
+		public DbSet<Order > Orders { get; set; }
 
 	}
 }

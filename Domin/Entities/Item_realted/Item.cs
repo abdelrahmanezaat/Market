@@ -1,5 +1,6 @@
 ﻿using Domin.Entities.Category_realted;
 using Domin.Entities.Commin;
+using Domin.Entities.Order_realted;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,5 +21,6 @@ namespace Domin.Entities.Item_realted
 		public Guid CategoryId { get; set; }
 		[ForeignKey(nameof(CategoryId))]
 		public Category Category { get; set; }
+		public virtual ICollection<Order> Orders { get; set; }
 	}
 }

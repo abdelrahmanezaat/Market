@@ -1,10 +1,12 @@
 ﻿using Application.Contract.IFeatures;
 using Application.Contract.IFeatures.ICategory;
 using Application.Contract.IFeatures.IItem;
+using Application.Contract.IFeatures.IOrder;
 using Application.Contract.IUser;
 using Application.Features.Category_Related_Imp;
 using Application.Features.Common;
 using Application.Features.Item_Related_Imp;
+using Application.Features.Order_Related;
 using Application.Features.User_Related_Imp;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -35,6 +37,9 @@ namespace Application.Extensions
 
 			// User
 			services.AddScoped(typeof(IAuthService), typeof(AuthService));
+
+			// Order 
+			services.AddScoped(typeof(IOrderService), typeof(OrderService));
 
 		}
 	}
