@@ -12,6 +12,7 @@ namespace Application.Dtos.UserDtos.AuthDtos
 		public string Email { get; set; }
 		public string FullName { get; set; }
 		public string ProfilePictureUrl { get; set; }
+		public Guid ChatId { get; set; }	
 		public bool IsEmailConfirmed { get; set; }
 		public List<string> Roles { get; set; }
 		public string AccessToken { get; set; }

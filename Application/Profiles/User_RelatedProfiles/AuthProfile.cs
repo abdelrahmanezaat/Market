@@ -8,6 +8,7 @@ using Domin.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace Application.Profiles.User_RelatedProfiles
 				AfterMap<SetImageAction<RegisterDto, UserAccount>>();
 
 			CreateMap<UserAccount, AuthDto>()
-				.ForMember(dest => dest.ProfilePictureUrl, opt => opt.MapFrom(src => Constants.BASE_URL + src.ProfilePictureUrl))
+				.ForMember(dest => dest.ProfilePictureUrl , opt => opt.MapFrom(src => Constants.BASE_URL + src.ProfilePictureUrl))
 
 				.ForMember(dest => dest.RefreshToken, opt =>
 					opt.MapFrom(src => src.UserSessions.FirstOrDefault(x => !x.IsDeleted).RefreshToken))

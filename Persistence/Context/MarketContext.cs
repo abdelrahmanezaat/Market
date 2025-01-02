@@ -1,4 +1,5 @@
 ﻿using Domin.Entities.Category_realted;
+using Domin.Entities.Chat_Realted;
 using Domin.Entities.Item_realted;
 using Domin.Entities.Order_realted;
 using Domin.Entities.UserEntities;
@@ -23,6 +24,8 @@ namespace Persistence.Context
 		public DbSet<Role> Roles { get; set; }
 		public DbSet<UserSession> UserSessions { get; set; }
 		public DbSet<Order > Orders { get; set; }
+		public DbSet<Chat> Chats { get; set; }
+		public DbSet<Message> Messages { get; set; }
 
 	}
 }

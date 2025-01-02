@@ -1,9 +1,11 @@
 ﻿using Application.Contract.IFeatures;
 using Application.Contract.IFeatures.ICategory;
+using Application.Contract.IFeatures.IChat;
 using Application.Contract.IFeatures.IItem;
 using Application.Contract.IFeatures.IOrder;
 using Application.Contract.IUser;
 using Application.Features.Category_Related_Imp;
+using Application.Features.Chat_Realted_imp;
 using Application.Features.Common;
 using Application.Features.Item_Related_Imp;
 using Application.Features.Order_Related;
@@ -40,6 +42,10 @@ namespace Application.Extensions
 
 			// Order 
 			services.AddScoped(typeof(IOrderService), typeof(OrderService));
+			// Chat
+			services.AddScoped(typeof(IChatService), typeof(ChatService));
+			services.AddScoped(typeof(IMessageService), typeof(MessageService));
+
 
 		}
 	}

@@ -4,6 +4,7 @@ using Application.Contract.IUser;
 using Application.Dtos.UserDtos.AuthDtos;
 using Application.Exceptions;
 using AutoMapper;
+using Domin.Entities.Chat_Realted;
 using Domin.Entities.UserEntities;
 using Domin.Utils;
 using Domin.Utils.UserConstants;
@@ -39,7 +40,7 @@ namespace Application.Features.User_Related_Imp
 			
 			
 
-			var user = await _repository.FirstOrDefaultAsync(x=>x.Email==loginDto.Email,source=>source.Include(x=>x.UserSessions));
+			var user = await _repository.FirstOrDefaultAsync(x=>x.Email==loginDto.Email,source=>source.Include(x=>x.UserSessions).Include(x=>x.Chat));
 
 			if (user == null || !_passwordHashService.Verify(user.PasswordHash, loginDto.Password))
 				throw new UnauthenticatedException();
@@ -58,8 +59,11 @@ namespace Application.Features.User_Related_Imp
 			user.UserRoles.Add(new UserRole { UserAccount = user, RoleId = RoleConstValues.User });
 			var refreshToken = _jwtService.GenerateRefreshToken();
 			user.UserSessions.Add(new UserSession { RefreshToken = refreshToken, UserAccount = user, RefreshTokenExpirationDate = DateTimeOffset.Now.AddDays(7) });
-			await _repository.AddAsync(user); 
+			await _repository.AddAsync(user);
+			var chat = new Chat { UserId = user.Id };
+			await _unitOfWork.GetRepository<Chat>().AddAsync(chat);
 			await _unitOfWork.SaveChangesAsync();
+			
 			
 			return await _jwtService.CreateAuthDto(user);
 			
@@ -79,3 +83,6 @@ namespace Application.Features.User_Related_Imp
 		}
 	}
 }
+//Q21i9uDf9TKx3TeXZYrxJKrLfthFLzRwMcC+bDH7tQg=
+//"email": "202027111@std.sci.cu.edu.eg",
+//"password": "A1@abdoo"
